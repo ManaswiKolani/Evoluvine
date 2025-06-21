@@ -3,7 +3,7 @@ import os
 # Screen settings
 WIDTH = 800
 HEIGHT = 600
-FPS = 100
+FPS = 60
 TILE_SIZE = 20
 
 # Game behavior

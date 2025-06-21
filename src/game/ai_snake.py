@@ -89,32 +89,32 @@ class AISnake:
         self.make_decision(inputs)
         self.move()
 
-        self.fitness += 1 + self.food_eaten * 50  # survival + food reward
+        self.fitness += 1 + self.food_eaten * 100  # survival + food reward
 
         # Distance to food
         head_x, head_y = self.head_position()
         food_x, food_y = food.position
-        distance = math.hypot(food_x - head_x, food_y - head_y)
+        distance = abs(food_x - head_x) + abs(food_y - head_y)
 
         # Reward or penalize based on distance change
         if self.last_food_distance is not None:
             if distance < self.last_food_distance:
-                self.fitness += 10  # moved closer
+                self.fitness += 40  # moved closer
             else:
-                self.fitness -= 1  # moved away
+                self.fitness -= 10  # moved away
 
         self.last_food_distance = distance
 
         # Danger penalty
-        danger_distance = math.hypot(danger.position[0] - head_x, danger.position[1] - head_y)
-        danger_threshold = self.tile_size   # within 2 tiles
+        danger_distance = abs(danger.position[0] - head_x) + abs(danger.position[1] - head_y)
+        danger_threshold = self.tile_size  
 
         if danger_distance < danger_threshold:
-            self.fitness -= (danger_threshold - danger_distance) * 2  # stronger penalty closer
+            self.fitness -= 5
 
         # Penalize wandering without eating
-        if self.steps > 100 and self.food_eaten == 0:
-            self.fitness -= 1
+        if self.steps > 20 and self.food_eaten == 0:
+            self.fitness -= 15
 
     def draw(self, surface, highlight=False):
         color = (255, 0, 0) if highlight else (0, 255, 0)

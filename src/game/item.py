@@ -26,7 +26,7 @@ class Item:
         self.position = self.random_position()
 
     def random_position(self):
-        margin = 3  # margin in tiles
+        margin = 1  # margin in tiles
         x = random.randint(margin, self.screen_width // self.tile_size - 1 - margin) * self.tile_size
         y = random.randint(margin, self.screen_height // self.tile_size - 1 - margin) * self.tile_size
         return (x, y)
@@ -56,18 +56,21 @@ class Danger(Item):
     def __init__(self, screen_width, screen_height, tile_size):
         super().__init__(screen_width, screen_height, tile_size, ["danger_sprite1.PNG", "danger_sprite2.PNG"])
 
-    def reset_away_from_snake(self, snake_body, min_distance_blocks=5):
+    def reset_away_from_snake(self, food_pos=None, snake_body=None):
         max_attempts = 100
         for _ in range(max_attempts):
             pos = self.random_position()
-            too_close = False
-            for segment in snake_body:
-                dx = abs(pos[0] - segment[0]) // self.tile_size
-                dy = abs(pos[1] - segment[1]) // self.tile_size
-                if dx <= min_distance_blocks and dy <= min_distance_blocks:
-                    too_close = True
-                    break
-            if not too_close:
-                self.position = pos
-                return
+
+            # Avoid food
+            if food_pos is not None and pos == food_pos:
+                continue
+
+            # Avoid any segment of the snake's body
+            if snake_body is not None and pos in snake_body:
+                continue
+
+            self.position = pos
+            return
+
+        # Fallback if valid spot not found
         self.position = self.random_position()

@@ -7,11 +7,11 @@ from constants import WIDTH, HEIGHT, TILE_SIZE, FPS, ORB_COUNT, BG_PATH, MODEL_P
 import pickle
 
 # Configuration
-POPULATION_SIZE = 1000
+POPULATION_SIZE = 600
 INPUT_SIZE = 6
-HIDDEN_LAYERS = [8]
+HIDDEN_LAYERS = [6,10,4]
 OUTPUT_SIZE = 4
-GENERATION_TIME = 2000
+GENERATION_TIME = 1000
 
 # Pygame setup
 pygame.init()
@@ -38,22 +38,21 @@ def draw_info(surface, gen, alive_count, best_score, best_score_ever):
     surface.blit(text, (10, 10))
 
 # Main training loop
+# Main training loop
 while True:
-    # Get new population for this generation
     snakes = ga.get_population()
     food = Food(WIDTH, HEIGHT, TILE_SIZE)
     danger = Danger(WIDTH, HEIGHT, TILE_SIZE)
     danger_timer = pygame.time.get_ticks()
-    
+
     step_count = 0
-    best_score = 0  # Reset best score for this generation
+    best_score = 0
     running = True
+    best_snake = None
 
     while running:
         clock.tick(FPS)
         step_count += 1
-        
-
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -71,6 +70,13 @@ while True:
                     snake.die()
                 alive_count += 1
 
+        # Update best_snake and top snakes
+        visible_snakes = sorted([s for s in snakes if s.alive], key=lambda s: s.fitness, reverse=True)[:10]
+        if visible_snakes:
+            best_snake = visible_snakes[0]
+            best_score = best_snake.food_eaten
+            best_score_ever = max(best_score_ever, best_score)
+
         # Drawing
         screen.blit(background, (0, 0))
         for orb in orbs:
@@ -82,23 +88,15 @@ while True:
         danger.update()
         danger.draw(screen)
 
-        # Visualize top 5 snakes by fitness
-        visible_snakes = sorted(snakes, key=lambda s: s.fitness, reverse=True)[:5]
-        if visible_snakes:
-            best_snake = visible_snakes[0]
-            best_score = best_snake.food_eaten
-            best_score_ever = max(best_score_ever, best_score)
+        # Draw visible snakes (top 100 or all alive if fewer)
+        for i, snake in enumerate(visible_snakes[:100]):
+            snake.draw(screen, highlight=(i == 0))
 
-            for i, snake in enumerate(visible_snakes):
-                if snake.alive:
-                    highlight = (i == 0)
-                    snake.draw(screen, highlight=highlight)
-        # Check if it's time to relocate danger
+        # Relocate danger if time
         current_time = pygame.time.get_ticks()
         if current_time - danger_timer >= DANGER_RELOCATE_INTERVAL:
-            # Move danger away from best snake’s body
-            if visible_snakes:
-                danger.reset_away_from_snake(visible_snakes[0].body)
+            if best_snake:
+                danger.reset_away_from_snake(food.position, best_snake.body)
             else:
                 danger.reset()
             danger_timer = current_time
@@ -106,13 +104,12 @@ while True:
         draw_info(screen, generation, alive_count, best_score, best_score_ever)
         pygame.display.flip()
 
-        # End of generation conditions
         if alive_count == 0 or step_count > GENERATION_TIME:
-            # Save example (at end of generation):
-            
-            with open(MODEL_PATH, 'wb') as f:
-                pickle.dump(best_snake.brain, f)
+            if best_snake:
+                with open(MODEL_PATH, 'wb') as f:
+                    pickle.dump(best_snake.brain, f)
 
             generation += 1
             ga.next_generation()
             running = False
+
