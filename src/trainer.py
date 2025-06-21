@@ -7,11 +7,11 @@ from constants import WIDTH, HEIGHT, TILE_SIZE, FPS, ORB_COUNT, BG_PATH, MODEL_P
 import pickle
 
 # Configuration
-POPULATION_SIZE = 500
+POPULATION_SIZE = 1000
 INPUT_SIZE = 6
 HIDDEN_LAYERS = [8]
 OUTPUT_SIZE = 4
-GENERATION_TIME = 5000
+GENERATION_TIME = 2000
 
 # Pygame setup
 pygame.init()

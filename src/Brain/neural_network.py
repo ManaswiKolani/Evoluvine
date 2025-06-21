@@ -38,7 +38,7 @@ class NeuralNetwork:
         new_nn.biases = [b.copy() for b in self.biases]
         return new_nn
     
-    def mutate(self, mutation_rate=0.1, mutation_strength=0.3):
+    def mutate(self, mutation_rate=0.2, mutation_strength=0.7):
         for i in range(len(self.weights)):
             mutation_mask = np.random.rand(*self.weights[i].shape) < mutation_rate
             self.weights[i] += mutation_mask * (np.random.randn(*self.weights[i].shape) * mutation_strength)
