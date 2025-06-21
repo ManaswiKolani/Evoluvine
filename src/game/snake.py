@@ -38,9 +38,12 @@ class Snake:
 
         head_x, head_y = self.body[0]
         dx, dy = self.direction
-        new_head = ((head_x + dx) % self.screen_width, (head_y + dy) % self.screen_height)
+        new_head = (head_x + dx, head_y + dy)
 
-        if new_head in self.body:
+        # Die if out of bounds
+        if (new_head[0] < 0 or new_head[0] >= self.screen_width or
+            new_head[1] < 0 or new_head[1] >= self.screen_height or
+            new_head in self.body):
             self.die()
             return
 
@@ -50,6 +53,7 @@ class Snake:
             self.grow_next = False
         else:
             self.body.pop()
+
 
     def grow(self):
         self.grow_next = True

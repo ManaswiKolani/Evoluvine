@@ -25,21 +25,26 @@ class AISnake:
     def move(self):
         if not self.alive:
             return
-            
-        new_head = ((self.body[0][0] + self.direction[0]) % self.screen_width,
-                (self.body[0][1] + self.direction[1]) % self.screen_height)
 
-        if new_head in self.body:
+        new_head = (self.body[0][0] + self.direction[0],
+                    self.body[0][1] + self.direction[1])
+
+        # Die if out of bounds
+        if (new_head[0] < 0 or new_head[0] >= self.screen_width or
+            new_head[1] < 0 or new_head[1] >= self.screen_height or
+            new_head in self.body):
             self.alive = False
             return
-            
+
         self.body.insert(0, new_head)
 
         if self.growth_pending > 0:
-                self.growth_pending -= 1 
+            self.growth_pending -= 1
         else:
             self.body.pop()
+
         self.steps += 1
+
 
     def grow(self):
         self.growth_pending += 1
@@ -86,7 +91,7 @@ class AISnake:
         self.make_decision(inputs)
         self.move()
 
-        self.fitness += 1 + self.food_eaten * 10  # survival + food reward
+        self.fitness += 1 + self.food_eaten * 20  # survival + food reward
 
         # Distance to food
         head_x, head_y = self.head_position()
@@ -97,7 +102,7 @@ class AISnake:
         # Reward or penalize based on distance change
         if self.last_food_distance is not None:
             if distance < self.last_food_distance:
-                self.fitness += 2  # moved closer
+                self.fitness += 5  # moved closer
             else:
                 self.fitness -= 1  # moved away
 
