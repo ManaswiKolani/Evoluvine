@@ -3,7 +3,7 @@ import os
 # Screen settings
 WIDTH = 800
 HEIGHT = 600
-FPS = 60
+FPS = 150
 TILE_SIZE = 20
 
 # Game behavior
@@ -18,4 +18,9 @@ BG_PATH = os.path.join(ASSETS_DIR, "background.PNG")
 ICON_PATH = os.path.join(ASSETS_DIR, "danger_sprite2.PNG")
 TITLE_CARD_PATH = os.path.join(ASSETS_DIR, "title_screen.PNG")
 MUSIC_PATH = os.path.join(ASSETS_DIR, "serenity_sound.mp3")
+
+# Models Path
+BRAIN_DIR = os.path.join(BASE_DIR, "..", "src", "Brain")
+MODEL_DIR = os.path.join(BRAIN_DIR, "models")
+MODEL_PATH = os.path.join(MODEL_DIR, "best_model.pkl")
 
