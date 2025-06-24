@@ -51,26 +51,15 @@ class Food(Item):
     def __init__(self, screen_width, screen_height, tile_size):
         super().__init__(screen_width, screen_height, tile_size, ["food_sprite1.PNG", "food_sprite2.PNG"])
 
-
-class Danger(Item):
-    def __init__(self, screen_width, screen_height, tile_size):
-        super().__init__(screen_width, screen_height, tile_size, ["danger_sprite1.PNG", "danger_sprite2.PNG"])
-
-    def reset_away_from_snake(self, food_pos=None, snake_body=None):
+    def reset_away_from_snake(self, snake_body=None):
+        """Reset food position away from snake body"""
         max_attempts = 100
         for _ in range(max_attempts):
             pos = self.random_position()
 
-            # Avoid food
-            if food_pos is not None and pos == food_pos:
-                continue
-
-            # Avoid any segment of the snake's body
             if snake_body is not None and pos in snake_body:
                 continue
 
             self.position = pos
             return
-
-        # Fallback if valid spot not found
         self.position = self.random_position()

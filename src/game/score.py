@@ -1,4 +1,4 @@
-# src/game/score.py
+
 import pygame
 
 class Score:

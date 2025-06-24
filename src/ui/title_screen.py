@@ -6,7 +6,7 @@ WIDTH = 800
 HEIGHT = 600
 
 def show_title_screen(screen, background, title_card):
-    font = pygame.font.Font(None, 24)
+    font = pygame.font.Font(None, 25)
     text = font.render("Press anywhere to start", True, (49, 134, 89))
     text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 100))
 

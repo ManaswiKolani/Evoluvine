@@ -9,11 +9,11 @@ class Snake:
         self.screen_height = screen_height
 
         self.body = [start_pos]
-        self.direction = (tile_size, 0)  # Starts moving to the right
+        self.direction = (tile_size, 0)  
         self.grow_next = False
         self.alive = True
 
-        # Load normal snake image
+        # Load snake image
         base_dir = os.path.dirname(os.path.abspath(__file__))
         assets_path = os.path.join(base_dir, "..", "..", "assets")
         self.image = pygame.image.load(os.path.join(assets_path, "snake_live.PNG")).convert_alpha()

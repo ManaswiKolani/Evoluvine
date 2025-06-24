@@ -11,7 +11,7 @@ class EndScreen:
         assets_path = os.path.join(base_dir, "..", "..", "assets")
         self.image = pygame.image.load(os.path.join(assets_path, "end_screen.PNG")).convert()
         self.image = pygame.transform.scale(self.image, (WIDTH, HEIGHT))
-        self.font = pygame.font.Font(None, 32)
+        self.font = pygame.font.Font(None, 25)
         self.text = self.font.render("Press any key to restart", True, (49, 134, 89))
         self.text_rect = self.text.get_rect(center=(WIDTH // 2, HEIGHT - 50))
 

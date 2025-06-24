@@ -4,10 +4,10 @@ from ui.title_screen import show_title_screen
 from ui.ambient_orb import AmbientOrb
 from ui.end_screen import EndScreen
 from game.snake import Snake
-from game.item import Food, Danger
+from game.item import Food
 from game.score import Score
 from constants import WIDTH, HEIGHT, FPS, TILE_SIZE, ORB_COUNT, \
-                      DANGER_RELOCATE_INTERVAL, DEATH_DELAY, \
+                      DEATH_DELAY, \
                       BG_PATH, ICON_PATH, TITLE_CARD_PATH, MUSIC_PATH
 
 def main():
@@ -44,9 +44,7 @@ def main():
                       screen_width=WIDTH, screen_height=HEIGHT)
 
         food = Food(WIDTH, HEIGHT, TILE_SIZE)
-        danger = Danger(WIDTH, HEIGHT, TILE_SIZE)
         score = Score()
-        danger_timer = pygame.time.get_ticks()
 
         MOVE_DELAY = 8
         move_counter = 0
@@ -90,21 +88,12 @@ def main():
 
                 if food.collision(snake.head_position()):
                     snake.grow()
-                    food.reset()
+                    food.reset_away_from_snake(snake.body)
                     score.increment()
-
-                if danger.collision(snake.head_position()):
-                    snake.die()
-
-            if current_time - danger_timer >= DANGER_RELOCATE_INTERVAL:
-                danger.reset_away_from_snake(snake.body)
-                danger_timer = current_time
 
             snake.draw(screen)
             food.update()
             food.draw(screen)
-            danger.update()
-            danger.draw(screen)
 
             score.draw(screen, WIDTH, font)
 
