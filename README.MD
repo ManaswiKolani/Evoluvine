@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="assets/title_screen.png" alt="Title Screen" width="600"/>
+  <img src="assets/title_screen.PNG" alt="Title Screen" width="600"/>
 </p>
 
 
