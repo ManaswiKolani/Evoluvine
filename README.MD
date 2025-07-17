@@ -50,7 +50,6 @@ Evoluvine combines classical game development with modern AI techniques to creat
 
 <p align="center">
   <img src="assets/main_game_preview.png" width="250"/>
-  <img src="assets/train_preview.png" width="250"/>
 </p>
 
 ---
