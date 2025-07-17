@@ -46,8 +46,7 @@ Evoluvine combines classical game development with modern AI techniques to creat
 
 - **Genetic Algorithms** for evolving optimal strategies  
 - **Neural Networks** as the "brain" of each snake  
-- **Fitness-based selection** for improving performance across generations  
-- **Real-time visualization** of both training and gameplay
+- **Fitness-based selection** for improving performance across generations 
 
 <p align="center">
   <img src="assets/main_game_preview.png" width="250"/>
@@ -74,8 +73,8 @@ The AI brain uses a simple yet effective feedforward neural network with the fol
 #### 3.1.2 Output Actions (3 dimensions):
 
 - **Forward**: Continue in current direction  
-- **Left**: Turn left relative to current direction  
-- **Right**: Turn right relative to current direction
+- **Left**: Turn left relative to the current direction  
+- **Right**: Turn right relative to the current direction
 
 #### 3.1.3 Activation Function:
 
@@ -83,7 +82,7 @@ The network uses the **Sigmoid** activation function, calculated as `1 / (1 + e^
 
 #### 3.1.4 Weight Initialization:
 
-**Xavier/Glorot Initialization** is employed.
+**Xavier/Glorot Initialization** 
 
 ---
 
@@ -123,16 +122,16 @@ Designed to encourage survival, efficiency, exploration, and discourage loops or
 **Food Collection**  
 - +100 per food  
 - +20 per body segment  
-- Idle counter reset on collection
+- Idle counter resets on collection
 
 **Survival**  
 - +0.1 per step  
-- Movement toward food: +8× improvement  
-- Movement away: -1.5× increase  
+- Movement toward food: +8×  
+- Movement away: -1.5×   
 
 **Exploration**  
 - +5 per new zone  
-- +1 per varied movement
+- +1 per variety in movement
 
 **Penalties**  
 - Loop: -15  
@@ -149,8 +148,7 @@ Designed to encourage survival, efficiency, exploration, and discourage loops or
 
 - 250 snakes  
 - 150 generations  
-- 1000 steps per snake  
-- CPU-based training
+- 1000 steps per snake 
 
 ### 4.2 Best Results
 
@@ -164,7 +162,7 @@ Designed to encourage survival, efficiency, exploration, and discourage loops or
 ## 5. Installation and Usage
 
 ### 5.1 Prerequisites
-The system requires Python 3.7 or higher, along with the pygame and numpy libraries for graphics rendering and numerical computations respectively.
+The system requires Python 3.7 or higher, along with the pygame and numpy libraries.
 
 ### 5.2 Installation Steps
 
