@@ -5,7 +5,7 @@
 
 
 # Evoluvine
-*An AI-Enhanced Snake Game Using Genetic Algorithms and Neural Networks*
+*An AI-Enhanced Snake Game Using Genetic Algorithms and Neural Networks* 
 
 ---
 
@@ -207,3 +207,4 @@ python src/evoluvine.py
 ## 6. References
 
 1. **Bialas, P.** "Implementation of artificial intelligence in Snake Game using genetic algorithm and neural networks." *Silesian University of Technology*, CEUR-WS.org/Vol-2468/p9.pdf
+
